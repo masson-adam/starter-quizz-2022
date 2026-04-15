@@ -1,7 +1,9 @@
 <div class="card" *ngIf="quiz">
     <h2>
         <i class="fab fa-leanpub"></i>
-        {{quiz.name}}
+        Nom : {{quiz.name}} <br>
+        <span>Thème : {{quiz.theme}} </span> <br>
+        <span>Nb questions : {{quiz.questions.length}}</span>
     </h2>
     <button class="button-card" (click)="selectQuiz()">Select</button>
 </div>

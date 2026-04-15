@@ -30,5 +30,9 @@ export class QuizService {
   addQuiz(quiz: Quiz) {
     // You need here to update the list of quiz and then update our observable (Subject) with the new list
     // More info: https://angular.io/tutorial/toh-pt6#the-searchterms-rxjs-subject
+    this.quizzes.push(quiz);
+
+    //on met à jour l'observable
+    this.quizzes$.next(this.quizzes);
   }
 }
