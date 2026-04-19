@@ -48,8 +48,15 @@ export class QuizService {
   }
 
   getQuizzes(){
-    this.http.get<{ quizzes: Quiz[] }>(this.url).subscribe((response) => {
-      this.quizzes = response.quizzes;
+    this.http.get(this.url).subscribe((response: any) => {
+      // 1. On affiche la réponse brute pour comprendre ce que le serveur nous envoie
+      console.log('Réponse du serveur :', response); 
+      
+      // 2. Si dans votre console (F12) vous voyez directement un tableau [...] :
+      this.quizzes = response; 
+      
+      // (Si jamais vous voyez un objet { quizzes: [...] }, alors remettez this.quizzes = response.quizzes;)
+
       this.quizzes$.next(this.quizzes);
     });
   }
