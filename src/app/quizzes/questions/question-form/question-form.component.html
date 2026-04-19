@@ -1,0 +1,10 @@
+<div class="card">
+  <h2><i class="fas fa-puzzle-piece"></i> Create Question</h2>
+  
+  <form class="custom-form" [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+    <label for="label">Title</label>
+    <input class="input-custom" type="text" id="label" formControlName="label">
+    
+    <button type="submit" class="button-card">Create</button>
+  </form>
+</div>

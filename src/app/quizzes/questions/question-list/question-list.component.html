@@ -1,0 +1,10 @@
+<div class="question-list" *ngIf="quiz">
+  <h2>Les questions</h2>
+  
+  <div class="question" *ngFor="let question of quiz.questions">
+    <app-question 
+        [question]="question" 
+        (questionDeleted)="deleteQuestion($event)">
+    </app-question>
+  </div>
+</div>

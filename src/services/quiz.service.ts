@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Quiz } from '../models/quiz.model';
 import { QUIZ_LIST } from '../mocks/quiz-list.mock';
 import { HttpClient } from '@angular/common/http';
+import { Question } from 'src/models/question.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,15 +50,52 @@ export class QuizService {
 
   getQuizzes(){
     this.http.get(this.url).subscribe((response: any) => {
-      // 1. On affiche la réponse brute pour comprendre ce que le serveur nous envoie
-      console.log('Réponse du serveur :', response); 
-      
-      // 2. Si dans votre console (F12) vous voyez directement un tableau [...] :
-      this.quizzes = response; 
-      
-      // (Si jamais vous voyez un objet { quizzes: [...] }, alors remettez this.quizzes = response.quizzes;)
+      // (Gardez response ou response.quizzes selon ce qui marchait pour vous à l'étape précédente)
+      let list = response.quizzes || response; 
 
+      // On s'assure que chaque quiz a bien un ID
+      list.forEach((quiz: Quiz, index: number) => {
+        if (!quiz.id) {
+          // S'il n'a pas d'id, on lui en donne un arbitraire (ex: "quiz-1", "quiz-2")
+          quiz.id = 'quiz-' + index; 
+        }
+      });
+
+      this.quizzes = list;
       this.quizzes$.next(this.quizzes);
     });
+  }
+
+  // Retourne le quiz dont l'id correspond à celui passé en paramètre
+  getQuiz(id: string): Quiz | undefined {
+    return this.quizzes.find(q => q.id == id);
+  }
+
+  /**
+   * Ajoute une question à un quiz spécifique
+   */
+  addQuestion(quiz: Quiz, question: Question) {
+    // 1. Par sécurité, on s'assure que le tableau de questions existe
+    if (!quiz.questions) {
+      quiz.questions = [];
+    }
+
+    // 2. On ajoute la nouvelle question au tableau de ce quiz
+    quiz.questions.push(question);
+
+    // 3. On prévient l'application que les données ont changé
+    this.quizzes$.next(this.quizzes);
+  }
+
+  /**
+   * Supprime une question d'un quiz spécifique
+   */
+  deleteQuestion(quiz: Quiz, question: Question) {
+    // 1. On remplace le tableau de questions par un nouveau tableau 
+    // qui contient toutes les questions SAUF celle qu'on veut supprimer
+    quiz.questions = quiz.questions.filter((q) => q !== question);
+
+    // 2. On prévient l'application que les données ont changé
+    this.quizzes$.next(this.quizzes);
   }
 }

@@ -1,0 +1,8 @@
+<div class="card question-card" *ngIf="question">
+  <div class="question-content">
+    <i class="fas fa-puzzle-piece"></i>
+    <span>{{ question.label }}</span>
+  </div>
+  
+  <button class="button-card" (click)="deleteQuestion()">Delete</button>
+</div>

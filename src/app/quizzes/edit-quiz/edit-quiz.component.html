@@ -1,0 +1,17 @@
+<div *ngIf="quiz">
+  <h1>Édition du Quiz : {{ quiz.name }}</h1>
+  <p>Thème : {{ quiz.theme }}</p>
+  
+  <hr>
+
+  <app-question-form [quiz]="quiz"></app-question-form>
+
+  <hr>
+
+  <app-question-list [quiz]="quiz"></app-question-list>
+
+</div>
+
+<div *ngIf="!quiz">
+  <p>Chargement du quiz...</p>
+</div>

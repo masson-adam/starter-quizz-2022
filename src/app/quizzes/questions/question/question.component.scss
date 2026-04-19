@@ -1,0 +1,16 @@
+.question-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row; // Force l'affichage en ligne plutôt qu'en colonne
+  
+  .question-content {
+    display: flex;
+    align-items: center;
+    
+    i {
+      margin-right: 10px;
+      font-size: 24px;
+    }
+  }
+}
