@@ -21,6 +21,8 @@ export class QuizFormComponent implements OnInit {
    */
   public quizForm: FormGroup;
 
+  public THEME_LIST : string[] = ['','Sport', 'Cinema', 'Histoire'];
+
   constructor(public formBuilder: FormBuilder, public quizService: QuizService) {
     // Form creation
     this.quizForm = this.formBuilder.group({
@@ -38,6 +40,12 @@ export class QuizFormComponent implements OnInit {
   addQuiz() {
     // We retrieve here the quiz object from the quizForm and we cast the type "as Quiz".
     const quizToCreate: Quiz = this.quizForm.getRawValue() as Quiz;
+
+    // On initialise le tableau de questions à vide
+    quizToCreate.questions = [];
+
+    // On initialise la date 
+    quizToCreate.creationDate = new Date();
 
     // Do you need to log your object here in your class? Uncomment the code below
     // and open your console in your browser by pressing F12 and choose the tab "Console".
